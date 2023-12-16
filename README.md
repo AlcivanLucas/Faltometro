@@ -1,13 +1,13 @@
 <div align="center" id="top">
-  <img src="./.github/inicial.png" alt="Behaviors" />
+  <img src="./.github/inicial.png" alt="Faltomêtro" />
 
   &#xa0;
 
 
-  <a href="https://behaviors.vercel.app/">Demo</a>
+  <a href="#">Demo</a>
 </div>
 
-<h1 align="center">Behaviors</h1>
+<h1 align="center">Faltomêtro</h1>
 
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/juniorvilas/nlw-setup?color=56BEB8">
@@ -44,35 +44,34 @@
 
 ## 😸 Sobre ##
 
-O projeto é uma reformulação da aplicação da NLW Setup, como melhorias nos mecanismos e funcionalidades- patrocinado pela <a href="https://rocketseat.com.br/"> Rocketseat</a>.
-Neste evento vimos como usar tecnologias atuais e poderosas na construção de sistemas simples ou avançados,mas para realmente ser um projeto funcional precisava de um sistema de gerenciamento de sessões do usuário, exclusão de dados, conclusão de hábitos passados,e principalmente que outras pessoas podessem se beneficiar da aplicação. E esse é o objetivo do desenvolvedor fazer um produto escalável que possa ser melhorado. Não foi fácil fazer tais implementações. principalmente a integração da aplicaçãp com o BD online (Vercel KV). A parte web foi desenvolvida com (ReactJs), server(Backend com Node).
+--------------------------Falar sobre o projeto----------------------------------------------
 
 ## Telas da aplicação
 
-### Tela Home Desktop ##
+### Home Desktop ##
 
 <img src="./.github/inicial.png" alt="Imagem da tela Home Desktop" />
 
-## Tela Novo Hábito Desktop ##
+## Nova matéria Desktop ##
 
 <img src="./.github/NewHabit.png" alt="Imagem da tela Novo Habito" />
 
-## Tela Login Desktop ##
+## Login Desktop ##
 
 <img src="./.github/Login.png" alt="Imagem da tela de Login" />
 
-## Tela de Cadastro de novo usuário Desktop ##
+## Cadastro de novo usuário Desktop ##
 
 <img src="./.github/Signup.png" alt="Imagem da tela de Cadastro de novo usuário" />
 
 ## :skateboard: Funcionalidades ##
 
-:heavy_check_mark: Criar um novo Hábito\
+:heavy_check_mark: Criar um nova disciplina\
 :heavy_check_mark: Iniciar sessão do usuário\
 :heavy_check_mark: Cadastrar novos usuários\
-:heavy_check_mark: Deletar hábitos\
-:heavy_check_mark: Mostrar tela home com hábitos criados e progresso\
-:heavy_check_mark: Marcar hábito como completo ou desmarcalo\
+:heavy_check_mark: Deletar disciplinas\
+:heavy_check_mark: Mostrar tela home com disciplinas criadas e progresso\
+:heavy_check_mark: Marcar disciplina como falta ou sem falta\
 :heavy_check_mark: Aplicação responsiva
 
 ## :rocket: Tecnologias ##
@@ -97,17 +96,18 @@ Abaixo poderá ter acesso às principais tecnologias usadas neste projeto
 
 
 ## :white_check_mark: Requisitos para rodar a aplicação ##
+1° Não usar o pc na Xuxa
 
-Antes de iniciar :checkered_flag:, você precisa ter [Git](https://git-scm.com) e [Node](https://nodejs.org/en/) instalado em seu sistema operacional, a CLI do Expo e o app Expo Go.Não sabe como fazer isso? Criamos abaixo uma documentação para ajudar vocês nesse processo [CLIdoExpo](https://efficient-sloth-d85.notion.site/Instalando-Expo-a4042eaea57d40fabeeaa2e462424ff0).
+2° Você precisa ter [Git](https://git-scm.com) e [Node](https://nodejs.org/en/) instalado em seu sistema operacional, a CLI do Expo e o app Expo Go.Não sabe como fazer isso? Ai abaixo tem uma documentação para ajudar você nesse processo [CLIdoExpo](https://efficient-sloth-d85.notion.site/Instalando-Expo-a4042eaea57d40fabeeaa2e462424ff0).
 
 ## :checkered_flag: Iniciand Frontend Mobile  ##
 
 ```bash
 # Clone este projeto
-$ git clone https://github.com/AlcivanLucas/Behaviors.git
+$ git clone https://github.com/AlcivanLucas/Faltometro.git
 
 # Acesse
-$ cd/behaviors
+$ cd/Faltometro
 
 # Instale as dependências
 $ npm i
@@ -120,10 +120,10 @@ $ npx expo start
 
 ```bash
 # Clone este projeto
-$ git clone https://github.com/AlcivanLucas/Behaviors.git
+$ git clone https://github.com/AlcivanLucas/Faltometro.git
 
 # Acesse
-$ cd/Behaviors/web
+$ cd/faltometro/Web
 
 # Instale as dependências
 $ npm i
@@ -136,10 +136,10 @@ $ npm run dev
 
 ```bash
 # Clone este projeto
-$ git clone https://github.com/AlcivanLucas/Behaviors.git
+$ git clone https://github.com/AlcivanLucas/Faltometro.git
 
 # Acesse
-$ cd/Behaviors/server
+$ cd/Faltometro/Server
 
 # Instale as dependências
 $ npm i
