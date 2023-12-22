@@ -2,19 +2,19 @@ import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
-import { HabitModal } from './HabitModal';
+import { DisciplineModal } from './DisciplineModal';
 
-interface HabitDayProps {
+interface DisciplineDayProps {
     date: Date;
     defaultCompleted?: number;
     defaultAmount?: number;
 }
 
-export function HabitDay({
+export function DisciplineDay({
     defaultCompleted = 0,
     defaultAmount = 0,
     date,
-}: HabitDayProps) {
+}: DisciplineDayProps) {
     const defaultCompletedPercentage = calculateCompletedPercentage(
         defaultAmount,
         defaultCompleted
@@ -45,7 +45,7 @@ export function HabitDay({
             />
             <Popover.Portal>
                 <>
-                    <HabitModal
+                    <DisciplineModal
                         date={date}
                         handleCompletedPercentage={handleCompletedPercentage}
                         completedPercentage={completedPercentage}

@@ -14,18 +14,18 @@ const availableWeekDays = [
     'Sábado',
 ]
 
-export function NewHabitForm() {
+export function NewDisciplineForm() {
     const [title, setTitle] = useState('')
     const [weekDays, setWeekDays] = useState<number[]>([])
 
-    async function createNewHabit(event: FormEvent) {
+    async function createNewDiscipline(event: FormEvent) {
         event.preventDefault()
 
         if (!title || weekDays.length === 0) {
             return
         }
 
-        await api.post('habits', {
+        await api.post('disciplines', {
             title,
             weekDays
         })
@@ -33,7 +33,7 @@ export function NewHabitForm() {
         setTitle('')
         setWeekDays([])
 
-        alert('Hábito criado com sucesso!')
+        alert('Disciplina adicinada com sucesso!')
     }
 
 
@@ -49,7 +49,7 @@ export function NewHabitForm() {
 
 
     return (
-        <form onSubmit={createNewHabit} className="w-full flex flex-col mt-6">
+        <form onSubmit={createNewDiscipline} className="w-full flex flex-col mt-6">
             <label htmlFor="title" className="font-semibold leading-tight">
                 Qual seu comprometimento?
             </label>

@@ -1,4 +1,4 @@
-// import { Habit } from "./components/Habit";
+
 import "../styles/global.css";
 import '../lib/dayjs'
 import { Header } from "../components/Header";

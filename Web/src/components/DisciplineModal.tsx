@@ -3,31 +3,31 @@ import * as Popover from '@radix-ui/react-popover';
 import dayjs from 'dayjs';
 import { api } from '../lib/axios';
 
-import { HabitsList } from './HabitsList';
+import { DisciplinesList } from './DisciplinesList';
 import { ProgressBar } from './ProgressBar';
 import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
 
-interface HabitModalProps {
+interface DisciplineModalProps {
     date: Date;
     handleCompletedPercentage: (percentage: number) => void;
     completedPercentage: number;
 }
 
-export interface HabitsInfo {
-    possibleHabits: {
+export interface DisciplinesInfo {
+    possibleDisciplines: {
         id: string;
         title: string;
         created_at: string;
     }[];
-    completedHabits: string[];
+    completedDisciplines: string[];
 }
 
-export function HabitModal({
+export function DisciplineModal({
     date,
     handleCompletedPercentage,
     completedPercentage,
-}: HabitModalProps) {
-    const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
+}: DisciplineModalProps) {
+    const [disciplinesInfo, setDisciplinesInfo] = useState<DisciplinesInfo>();
 
     const dateAndMonth = dayjs(date).format('DD/MM');
     const dayOfWeek = dayjs(date).format('dddd');
@@ -40,26 +40,26 @@ export function HabitModal({
                 },
             })
             .then((response) => {
-                setHabitsInfo(response?.data);
+                setDisciplinesInfo(response?.data);
                 const updatedCompletedPercentage = calculateCompletedPercentage(
-                    response?.data?.possibleHabits?.length,
-                    response?.data?.completedHabits?.length
+                    response?.data?.possibleDisciplines?.length,
+                    response?.data?.completedDisciplines?.length
                 );
                 handleCompletedPercentage(updatedCompletedPercentage);
             });
     }, []);
 
     function handleCompletedChanged(
-        habitsInfo: HabitsInfo,
-        completedHabits: string[]
+        disciplinesInfo: DisciplinesInfo,
+        completedDisciplines: string[]
     ) {
-        setHabitsInfo({
-            possibleHabits: habitsInfo?.possibleHabits,
-            completedHabits,
+        setDisciplinesInfo({
+            possibleDisciplines: disciplinesInfo?.possibleDisciplines,
+            completedDisciplines,
         });
     }
 
-    if (!habitsInfo) {
+    if (!disciplinesInfo) {
         return <div></div>;
     }
 
@@ -72,10 +72,10 @@ export function HabitModal({
                 {dateAndMonth}
             </span>
             <ProgressBar progress={completedPercentage} />
-            <HabitsList
+            <DisciplinesList
                 date={date}
                 handleCompletedPercentage={handleCompletedPercentage}
-                habitsInfo={habitsInfo}
+                disciplinesInfo={disciplinesInfo}
                 onCompletedChanged={handleCompletedChanged}
             />
             <Popover.Arrow height={8} width={16} className='fill-red-900 ' />

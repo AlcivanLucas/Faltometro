@@ -54,7 +54,7 @@
 
 ## Nova matéria Desktop ##
 
-<img src="./.github/NewHabit.png" alt="Imagem da tela Novo Habito" />
+<img src="./.github/NewDiscipline.png" alt="Imagem da tela Nova dsiciplina" />
 
 ## Login Desktop ##
 

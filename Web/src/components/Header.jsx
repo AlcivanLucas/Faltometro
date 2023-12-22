@@ -3,7 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useState } from 'react'
 
 import logoImage from '../assets/logo.svg'
-import { NewHabitForm } from './NewHabitForm';
+import { NewDisciplineForm } from './NewDisciplineForm';
 
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -27,15 +27,19 @@ export function Header() {
                     <Plus size={20} className="text-red-500" />
                     Adicionar disciplina
                 </Dialog.Trigger>
+
+                <Dialog.Trigger
+                    type="button"
+                    className="border border-red-500 font-semibold rounded-lg px-6 py-4 flex items-center gap-3 hover:border-red-300 transition-colors focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-background"
+                >
+                    <X size={20} className="text-red-500" />
+                    Deletar disciplina
+                </Dialog.Trigger>   
                 
-
-
                 <div>
-                
                     <Button 
                         Text="Sair" 
                         onClick={() => [signout(), navigate("/")]}
-                        
                     >
                             Sair
                     </Button>
@@ -54,7 +58,7 @@ export function Header() {
                             Criar hábito
                         </Dialog.Title>
 
-                        <NewHabitForm />
+                        <NewDisciplineForm />
                     </Dialog.Content>
                 </Dialog.Portal>
 

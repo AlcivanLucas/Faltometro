@@ -4,9 +4,9 @@ import { z } from 'zod'
 import { prisma } from "./lib/prisma"
 
 export async function appRoutes(app: FastifyInstance) {
-    // rota responsável por criar habitos
-    app.post('/habits', async (request) => {
-        const createHabitBody = z.object({
+    // rota responsável por criar disciplinas
+    app.post('/disciplines', async (request) => {
+        const createDisciplineBody = z.object({
             title: z.string(),
             weekDays: z.array(
                 z.number().min(0).max(6)
@@ -14,11 +14,11 @@ export async function appRoutes(app: FastifyInstance) {
 
         })
 
-        const { title, weekDays } = createHabitBody.parse(request.body)
+        const { title, weekDays } = createDisciplineBody.parse(request.body)
 
         const today = dayjs().startOf('day').toDate()
 
-        await prisma.habit.create({
+        await prisma.discipline.create({
             data: {
                 title,
                 created_at: today,
@@ -33,6 +33,22 @@ export async function appRoutes(app: FastifyInstance) {
         })
 
     })
+
+    // rota responsável deletar disciplinas *em desenvolvimento
+    app.delete('/deletedisciplines', async (request) => {
+        const deleteDisciplineParams = z.object({
+            id: z.string().uuid(),
+        })
+
+        const { id } = deleteDisciplineParams.parse(request.params)
+
+        await prisma.discipline.delete({
+            where: {
+                id
+            }
+        })
+    })
+
     // rota responsável por busta hábitos de um dia específico
     app.get('/day', async (request) => {
         const getDayParams = z.object({
@@ -45,7 +61,7 @@ export async function appRoutes(app: FastifyInstance) {
 
         const weekDay = dayjs(parsedDate).get('day')
 
-        const possibleHabits = await prisma.habit.findMany({
+        const possibleDisciplines = await prisma.discipline.findMany({
             where: {
                 created_at: {
                     lte: date,
@@ -63,28 +79,29 @@ export async function appRoutes(app: FastifyInstance) {
                 date: parsedDate.toDate(),
             },
             include: {
-                dayHabits: true
+                dayDisciplines: true
             }
         })
 
-        const completedHabits = day?.dayHabits.map(dayHabit => {
-            return dayHabit.habit_id
+        const completedDisciplines = day?.dayDisciplines.map(dayDiscipline => {
+            return dayDiscipline.discipline_id
         })
 
         return {
-            possibleHabits,
-            completedHabits
+            possibleDisciplines,
+            completedDisciplines
         }
     })
-    // completar / não-completar um hábito, muda o status
-    // caso queira mudar habitos retroativos assistir aula 03 minuto 7;00
-    app.patch('/habits/:id/toggle', async (request) => {
 
-        const toggleHabitParams = z.object({
+    // completar / não-completar um hábito, muda o status
+    // caso queira mudar disciplinas retroativos assistir aula 03 minuto 7;00
+    app.patch('/disciplines/:id/toggle', async (request) => {
+
+        const toggleDisciplineParams = z.object({
             id: z.string().uuid(),
         })
 
-        const { id } = toggleHabitParams.parse(request.params)
+        const { id } = toggleDisciplineParams.parse(request.params)
 
         const today = dayjs().startOf('day').toDate()
 
@@ -102,35 +119,35 @@ export async function appRoutes(app: FastifyInstance) {
             })
         }
 
-        const dayHabit = await prisma.dayHabit.findUnique({
+        const dayDiscipline = await prisma.dayDiscipline.findUnique({
             where: {
-                day_id_habit_id: {
+                day_id_discipline_id: {
                     day_id: day.id,
-                    habit_id: id
+                    discipline_id: id
                 }
             }
         })
 
-        if (dayHabit) {
+        if (dayDiscipline) {
             //remover a marcação de completo
-            await prisma.dayHabit.delete({
+            await prisma.dayDiscipline.delete({
                 where: {
-                    id: dayHabit.id,
+                    id: dayDiscipline.id,
                 }
             })
         } else {
             // Completar o hábito
-            await prisma.dayHabit.create({
+            await prisma.dayDiscipline.create({
                 data: {
                     day_id: day.id,
-                    habit_id: id
+                    discipline_id: id
                 }
             })
         }
 
 
     })
-    // rota para buscar o sumario de habitos do dia especifico
+    // rota para buscar o sumario de disciplinas do dia especifico
     app.get('/summary', async () => {
         const summary = await prisma.$queryRaw`
             SELECT 
@@ -139,15 +156,15 @@ export async function appRoutes(app: FastifyInstance) {
                 (
                     SELECT 
                        cast(count(*) as float)
-                    FROM day_habits DH
+                    FROM day_disciplines DH
                     WHERE DH.day_id = D.id 
                 ) as completed,
                 (
                     SELECT
                         cast(count(*) as float)
-                    FROM habit_week_days HWD
-                    JOIN habits H
-                        ON H.id = HWD.habit_id
+                    FROM discipline_week_days HWD
+                    JOIN disciplines H
+                        ON H.id = HWD.discipline_id
                     WHERE  
                         HWD.week_day = cast(strftime('%w', D.date/1000.0, 'unixepoch') as int)
                         AND H.created_at <= D.date

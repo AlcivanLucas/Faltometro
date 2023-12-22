@@ -1,7 +1,7 @@
 import Fastify from "fastify"
 import cors from "@fastify/cors"
 import { appRoutes } from "./routes"
-
+//o CORS diz quais aplicações podem acessar a nossa API
 const app = Fastify()
 
 app.register(cors, {
