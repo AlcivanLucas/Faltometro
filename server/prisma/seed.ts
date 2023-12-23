@@ -12,8 +12,9 @@ const thirdDisciplineId = 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00'
 const thirdDisciplineCreationDate = new Date('2023-01-08T03:00:00.000')
 
 async function run() {
-    await prisma.discipline.deleteMany()
-    await prisma.day.deleteMany()
+    // await prisma.discipline.deleteMany()
+    // await prisma.day.deleteMany()
+
 
     /**
      * Create disciplines
@@ -125,3 +126,6 @@ run()
         await prisma.$disconnect()
         process.exit(1)
     })
+
+
+// npx prisma db seed: povoa o db com os dados do seed.ts

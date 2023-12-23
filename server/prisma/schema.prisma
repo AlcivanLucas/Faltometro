@@ -64,3 +64,4 @@ model DayDiscipline { // Gera a tabela de relacionamento entre os hábitos e os 
 // Http server run (npm run dev)
 // npx prisma studio
 // npx prisma migrate dev : atualiza o banco de dados com as mudanças feitas no schema.prisma
+// npx prisma bd seed: insere dados no banco de dados
