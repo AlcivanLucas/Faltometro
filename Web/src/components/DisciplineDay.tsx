@@ -32,7 +32,7 @@ export function DisciplineDay({
         <Popover.Root>
             <Popover.Trigger
                 className={clsx(
-                    'w-10 h-10 rounded-lg border-2  ',
+                    'w-10 h-10 rounded-lg border-2   ',
                     {
                         'bg-zinc-900 border-zinc-800': completedPercentage === 0,
                         'bg-red-500 border-red-400': completedPercentage > 0 && completedPercentage < 20,

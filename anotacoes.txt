@@ -1,3 +1,6 @@
 aula 1 : 
 
 aula 2: criação do bd, criação dos models, e relacionamento das tabelas,
+
+envolvidos com a listagem de disciplinas 
+DisciplineDay,disciplineModal, DisciplineList, 

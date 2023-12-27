@@ -1,16 +1,17 @@
 import { Plus, X } from 'phosphor-react'
-import * as Dialog from '@radix-ui/react-dialog';
+import * as Dialog from '@radix-ui/react-dialog';// Radix-ui
 import { useState } from 'react'
 
-import logoImage from '../assets/logo.svg'
+import logoImage from '../assets/logo.svg';
 import { NewDisciplineForm } from './NewDisciplineForm';
+// import { DeleteDisciplineForm } from './DeleteDisciplineForm';
 
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Button from "./Button";
 
-
-
+//programação imperativa vs declarativa (react)
+//modal aula 03 
 export function Header() {
     const { signout } = useAuth();
     const navigate = useNavigate();
@@ -46,7 +47,7 @@ export function Header() {
                 </div>
 
                 
-                <Dialog.Portal>
+                 <Dialog.Portal>  {/* tira o conteúdo de dentro do header*/}
                     <Dialog.Overlay className="w-screen h-screen bg-black/80 fixed inset-0" />
 
                     <Dialog.Content className="absolute p-10 bg-zinc-900 rounded-2xl w-full max-w-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" >
@@ -55,7 +56,7 @@ export function Header() {
                         </Dialog.Close>
 
                         <Dialog.Title className="text-3xl leading-tight font-extrabold">
-                            Criar hábito
+                            Adicionar disciplina
                         </Dialog.Title>
 
                         <NewDisciplineForm />

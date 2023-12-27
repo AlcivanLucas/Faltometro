@@ -3,6 +3,14 @@ import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-yea
 import { useEffect, useState } from 'react'; // Importa hooks do React
 import { api } from '../lib/axios'; // Importa o cliente HTTP axios
 import dayjs from 'dayjs'; // Importa a biblioteca dayjs para manipulação de datas
+import {DisciplineModal} from './DisciplineModal'
+import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
+
+interface DisciplineDayProps {
+    date: Date;
+    defaultCompleted?: number;
+    defaultAmount?: number;
+}
 
 // Array com os dias da semana
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
@@ -16,6 +24,9 @@ const minimumSummaryDatesSize = 10 * 7;
 // Calcula a quantidade de dias que faltam para completar o calendário
 const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length;
 
+// Descobre o mês atual
+const dateMonth: string =  dayjs().format('MMMM');
+
 // Tipo para a estrutura de dados do resumo
 type Summary = {
     id: string;
@@ -25,7 +36,24 @@ type Summary = {
 }[];
 
 // Componente principal para exibir o calendário
-export function SummaryTable() {
+export function SummaryTable(){
+//     defaultCompleted = 0,
+//     defaultAmount = 0,
+//     date,
+// }: DisciplineDayProps) {
+//     const defaultCompletedPercentage = calculateCompletedPercentage(
+//         defaultAmount,
+//         defaultCompleted
+//     );
+
+//     const [completedPercentage, setCompletedPercentage] = useState(
+//         defaultCompletedPercentage
+//     );
+
+//     function handleCompletedPercentage(percentage: number) {
+//         setCompletedPercentage(percentage);
+//     }
+
     // Estado para armazenar os dados do resumo
     const [summary, setSummary] = useState<Summary>([]);
 
@@ -57,7 +85,9 @@ export function SummaryTable() {
 
                 {/* Container do Mês */}
                 <div className='flex justify-center w-full py-4'> 
-                    <h1 className='text-zinc-400 text-2xl font-bold'>Dezembro</h1>
+                    <span className='text-zinc-400 text-2xl font-bold'>
+                        {dateMonth}
+                    </span>
                 </div>
 
                 {/* Container do Calendário */}
@@ -107,30 +137,25 @@ export function SummaryTable() {
                 </div>
             
             </div>
-
-            <div className='w-full md:w-1/2 flex flex-col items-center'> {/* Container das faltas | por matéria Metade da largura em dispositivos médios e maiores*/}
-
-               
-                <div className='flex justify-center w-full py-4'>  {/* Container do titulo */}
-                    <h1 className='text-zinc-400 text-2xl font-bold'>Faltas por disciplina</h1>
+            {/* <DisciplineTable/> */}
+            <div className='flex flex-col items-center'> {/* Container calendario */}
+                <div className='flex justify-center w-full py-4'> 
+                    <h1 className='font-semibold text-zinc-400 text-2xl'>Faltas por Compromisso</h1>
                 </div>
-
-                {/* Container das disciplinas */}
-                <div className='flex flex-col justify-center items-center'>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-4 flex items-center justify-center'>Álgebra Linear</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Computaria</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Lógica Proposicional</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Brotheragem I</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Agiotagem II</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Brotheragem III</label>
-                    <label className='text-zinc-400 text-xl font-bold h-10 py-6 flex items-center justify-center'>Sonegação IV</label>            
+                <div className='justify-center flex w-full'>
+                    <span>Matemática</span>
+                    <span>Português</span>
+                    <span>Geografia</span>
+                    <span>Biologia</span>
                 </div>
-
-                {/* Container da tabela de disciplinas */}
-                {/* ... (adicionar aqui a tabela de disciplinas) */}
-                
-
+                {/* <DisciplineModal
+                        date={date}
+                        handleCompletedPercentage={handleCompletedPercentage}
+                        completedPercentage={completedPercentage}
+                    /> */}
             </div>
+
+
 
         </div>
 

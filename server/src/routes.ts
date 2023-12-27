@@ -1,9 +1,10 @@
 import dayjs from "dayjs"
 import { FastifyInstance } from "fastify"
-import { z } from 'zod'
+import { z } from 'zod' // biblioteca para validação de dados
 import { prisma } from "./lib/prisma"
 
 export async function appRoutes(app: FastifyInstance) {
+
     // rota responsável por criar disciplinas
     app.post('/disciplines', async (request) => {
         const createDisciplineBody = z.object({
@@ -16,7 +17,9 @@ export async function appRoutes(app: FastifyInstance) {
 
         const { title, weekDays } = createDisciplineBody.parse(request.body)
 
+        //zera a hr, min, seg: 00:00:00, para que a disciplina apareça no msm dia que foi criada
         const today = dayjs().startOf('day').toDate()
+
 
         await prisma.discipline.create({
             data: {

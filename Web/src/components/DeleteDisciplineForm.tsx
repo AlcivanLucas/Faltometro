@@ -65,7 +65,7 @@ export function NewDisciplineForm() {
             />
 
             <label htmlFor="" className="font-semibold leading-tight mt-4">
-                Qual a recorrência?
+                Qual a recorrênciaaaa?
             </label>
 
             <div className="mt-3 flex flex-col gap-2">
