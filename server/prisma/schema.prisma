@@ -11,7 +11,8 @@ generator erd {
 }
 
 datasource db {
-  provider = "sqlite"
+  // provider = "sqlite" // para localhost
+  provider = "postgresql" // para deploy na neondb
   url      = env("DATABASE_URL")
 }
 
