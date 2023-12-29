@@ -4,3 +4,6 @@ aula 2: criação do bd, criação dos models, e relacionamento das tabelas,
 
 envolvidos com a listagem de disciplinas 
 DisciplineDay,disciplineModal, DisciplineList, 
+
+postgresql://AlcivanLucas:3tXyZVg5IPzr@ep-empty-glade-73677365.us-east-2.aws.neon.tech/neondb?sslmode=require 
+
