@@ -1,20 +1,25 @@
-// Nesse projeto eu utilizei ORM para fazer a conexão com o banco de dados com o prisma e o sqlite
-
-//att models 
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-}
-
 datasource db {
-  // provider = "sqlite" // para localhost
-  provider = "postgresql" // para deploy na neondb
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model User{
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  // password String? o ponto de interrogação sifnifica que o campo é opcional
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  @@map("users")
+}
+
 
 model Discipline { // Gera a tabela dos discipline no banco de dados
   id         String   @id @default(uuid())
@@ -61,8 +66,6 @@ model DayDiscipline { // Gera a tabela de relacionamento entre os hábitos e os 
   @@map("day_disciplines")
 }
 
-// Aula 02 43:53
-// Http server run (npm run dev)
-// npx prisma studio
-// npx prisma migrate dev : atualiza o banco de dados com as mudanças feitas no schema.prisma
-// npx prisma bd seed: insere dados no banco de dados
+// npx prisma migrate dev --name init : cria a primeira migração que é a criação do DB apartir do schema em TS 
+// o "npx prisma migrate dev" verifica de precisa fazer alterações
+// e o "npx prisma migrate deploy" apenas faz as alterações

@@ -2,8 +2,11 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+const firstUserId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+const firstUserCreationDate = new Date('2023-12-25T03:00:00.000')
+
 const firstDisciplineId = '0730ffac-d039-4194-9571-01aa2aa0efbd'
-const firstDisciplineCreationDate = new Date('2022-12-31T03:00:00.000')
+const firstDisciplineCreationDate = new Date('2022-12-17T03:00:00.000')
 
 const secondDisciplineId = '00880d75-a933-4fef-94ab-e05744435297'
 const secondDisciplineCreationDate = new Date('2023-01-03T03:00:00.000')
@@ -20,6 +23,17 @@ async function run() {
      * Create disciplines
      */
     await Promise.all([
+
+        prisma.user.create({
+            data: {
+                id: firstUserId,
+                name: 'João',
+                email: 'joao@gmail.com',
+                password: '12345678',
+                created_at: firstUserCreationDate,
+                
+            }
+        }),
         prisma.discipline.create({
             data: {
                 id: firstDisciplineId,

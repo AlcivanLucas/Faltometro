@@ -1,12 +1,16 @@
 import dayjs from "dayjs"
-import { FastifyInstance } from "fastify"
-import { z } from 'zod' // biblioteca para validação de dados
+// import { FastifyInstance } from "fastify"
+import { Request, Response } from 'express'; // Importando Request e Response do Express
+import { z, AnyZodObject } from 'zod' // biblioteca para validação de dados
 import { prisma } from "./lib/prisma"
+import Express from "express";
+// estou usando PostegreSql.
 
-export async function appRoutes(app: FastifyInstance) {
-
+// export async function appRoutes(app: FastifyInstance) {
+export function appRoutes(app: any) {
     // rota responsável por criar disciplinas
-    app.post('/disciplines', async (request) => {
+    // app.post('/disciplines', async (request) => {
+    app.post('/disciplines', async (request: Request, response: Response) => {
         const createDisciplineBody = z.object({
             title: z.string(),
             weekDays: z.array(
@@ -19,7 +23,6 @@ export async function appRoutes(app: FastifyInstance) {
 
         //zera a hr, min, seg: 00:00:00, para que a disciplina apareça no msm dia que foi criada
         const today = dayjs().startOf('day').toDate()
-
 
         await prisma.discipline.create({
             data: {
@@ -34,11 +37,36 @@ export async function appRoutes(app: FastifyInstance) {
                 }
             }
         })
+    })
+
+    // rota responsável por criar usuários
+    // app.post('/users', async (request) => {
+    app.post('/users', async (request: Request, response: Response) => {
+        const createUserBody = z.object({
+            name: z.string(),
+            password: z.string(),
+            email: z.string().email(),
+        })
+
+        const { name,email,password} = createUserBody.parse(request.body)
+
+        //zera a hr, min, seg: 00:00:00, para que o user apareça no msm dia que foi criada
+        const today = dayjs().startOf('day').toDate()
+
+        await prisma.user.create({
+            data: {
+                name,
+                created_at: today,
+                email,
+                password,
+            }
+        })
 
     })
 
     // rota responsável deletar disciplinas *em desenvolvimento
-    app.delete('/deletedisciplines', async (request) => {
+    // app.delete('/deletedisciplines', async (request) => {
+    app.delete('/deletedisciplines', async (request: Request, response: Response) => {
         const deleteDisciplineParams = z.object({
             id: z.string().uuid(),
         })
@@ -52,8 +80,10 @@ export async function appRoutes(app: FastifyInstance) {
         })
     })
 
+
     // rota responsável por busta hábitos de um dia específico
-    app.get('/day', async (request) => {
+    // app.get('/day', async (request) => {
+    app.get('/day', async (request: Request, response: Response) => {
         const getDayParams = z.object({
             date: z.coerce.date()
         })
@@ -98,7 +128,8 @@ export async function appRoutes(app: FastifyInstance) {
 
     // completar / não-completar um hábito, muda o status
     // caso queira mudar disciplinas retroativos assistir aula 03 minuto 7;00
-    app.patch('/disciplines/:id/toggle', async (request) => {
+    // app.patch('/disciplines/:id/toggle', async (request) => {
+    app.patch('/disciplines/:id/toggle', async (request: Request, response: Response) => {
 
         const toggleDisciplineParams = z.object({
             id: z.string().uuid(),
@@ -151,7 +182,8 @@ export async function appRoutes(app: FastifyInstance) {
 
     })
     // rota para buscar o sumario de disciplinas do dia especifico
-    app.get('/summary', async () => {
+    // app.get('/summary', async () => {
+    app.get('/summary', async (request: Request, response: Response) => {
         const summary = await prisma.$queryRaw`
             SELECT 
                 D.id,
@@ -169,7 +201,7 @@ export async function appRoutes(app: FastifyInstance) {
                     JOIN disciplines H
                         ON H.id = HWD.discipline_id
                     WHERE  
-                        HWD.week_day = cast(strftime('%w', D.date/1000.0, 'unixepoch') as int)
+                        HWD.week_day = date_part('dow', D.date) - 1
                         AND H.created_at <= D.date
                 ) as amount
             FROM days D
@@ -178,3 +210,7 @@ export async function appRoutes(app: FastifyInstance) {
         return summary
     })
 }
+
+
+// Código de erro: P2010 indica um erro do lado do cliente Prisma.
+// HWD.week_day = cast(strftime('%w', D.date/1000.0, 'unixepoch') as int)

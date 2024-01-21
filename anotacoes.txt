@@ -7,3 +7,4 @@ DisciplineDay,disciplineModal, DisciplineList,
 
 postgresql://AlcivanLucas:3tXyZVg5IPzr@ep-empty-glade-73677365.us-east-2.aws.neon.tech/neondb?sslmode=require 
 
+mkdir 'cria pastas 
