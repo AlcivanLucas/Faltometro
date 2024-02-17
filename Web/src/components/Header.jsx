@@ -32,8 +32,6 @@ export function Header() {
                         Sair
                 </Button>
             </div>
-
-            
         </div>
     )
 }
