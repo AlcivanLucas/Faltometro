@@ -1,5 +1,5 @@
 <div align="center" id="top">
-  <img src="./.github/inicial.png" alt="Faltomêtro" />
+  <img src="./.github/Home-1.jpg" alt="Faltomêtro" />
 
   &#xa0;
 
@@ -50,19 +50,24 @@
 
 ### Home Desktop ##
 
-<img src="./.github/inicial.png" alt="Imagem da tela Home Desktop" />
+<img src="./.github/HomeandModal.jpg" alt="Imagem da tela Home Desktop" />
 
-## Nova matéria Desktop ##
+## Nova Disciplina Desktop ##
 
-<img src="./.github/NewDiscipline.png" alt="Imagem da tela Nova dsiciplina" />
+<img src="./.github/NewDisciplineModal.jpg" alt="Imagem da tela Nova dsiciplina" />
+
+## Deletar Disciplina Desktop ##
+
+<img src="./.github/DeleteDisciplineModal.jpg" alt="Imagem da tela Deletar dsiciplina" />
+
 
 ## Login Desktop ##
 
-<img src="./.github/Login.png" alt="Imagem da tela de Login" />
+<img src="./.github/Login.jpg" alt="Imagem da tela de Login" />
 
 ## Cadastro de novo usuário Desktop ##
 
-<img src="./.github/Signup.png" alt="Imagem da tela de Cadastro de novo usuário" />
+<img src="./.github/Register.jpg" alt="Imagem da tela de Cadastro de novo usuário" />
 
 ## :skateboard: Funcionalidades ##
 
