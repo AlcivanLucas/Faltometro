@@ -14,7 +14,6 @@ export function App() {
     <div className="w-full  px-6 flex flex-col gap-16">
         <Header />
         <SummaryTable />
-        
       </div>
 
     </div>

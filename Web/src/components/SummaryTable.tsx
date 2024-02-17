@@ -5,6 +5,7 @@ import { api } from '../lib/axios'; // Importa o cliente HTTP axios
 import dayjs from 'dayjs'; // Importa a biblioteca dayjs para manipulação de datas
 import {DisciplineModal} from './DisciplineModal'
 import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
+import { DisciplineTable } from './DisciplineTable';
 
 interface DisciplineDayProps {
     date: Date;
@@ -138,22 +139,7 @@ export function SummaryTable(){
             
             </div>
             {/* <DisciplineTable/> */}
-            <div className='flex flex-col items-center'> {/* Container calendario */}
-                <div className='flex justify-center w-full py-4'> 
-                    <h1 className='font-semibold text-zinc-400 text-2xl'>Faltas por Compromisso</h1>
-                </div>
-                <div className='justify-center flex w-full'>
-                    <span>Matemática</span>
-                    <span>Português</span>
-                    <span>Geografia</span>
-                    <span>Biologia</span>
-                </div>
-                {/* <DisciplineModal
-                        date={date}
-                        handleCompletedPercentage={handleCompletedPercentage}
-                        completedPercentage={completedPercentage}
-                    /> */}
-            </div>
+            <DisciplineTable/>
 
 
 
