@@ -3,56 +3,64 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import { FormEvent, useState, useEffect } from "react";
 import { api } from "../lib/axios";
 
-
+interface Discipline {
+    id: string;
+    title: string;
+}
 
 export function DeleteDisciplineForm() {
-        // Estado para armazenar as disciplinas disponíveis
-        const [availableDisciplines, setAvailableDisciplines] = useState<string[]>([]);
-        // Estado para armazenar o UUID da disciplina que será deletada
-        const [id, setId] = useState('');
+    // Estado para armazenar as disciplinas disponíveis
+    const [availableDisciplines, setAvailableDisciplines] = useState<Discipline[]>([]);
+    // Estado para armazenar o UUID da disciplina que será deletada
+    const [id, setId] = useState('');
 
-        // Efeito para buscar as disciplinas disponíveis da API quando o componente é montado
-        useEffect(() => {
-            // Função para buscar as disciplinas da API
-            async function fetchDisciplines() {
-                try {
-                    const response = await api.get('disciplines');
-                    const disciplines = response.data.map((discipline: any) => discipline.title);
-                    console.log(response);
-                    console.log(disciplines);
-
-                    // const disciplines = response.data.map((discipline: any) => discipline.id);
-                    setAvailableDisciplines(disciplines);
-                } catch (error) {
-                    console.error('Error fetching disciplines:', error);
-                }
-            }
-            // Chamada da função para buscar as disciplinas
-            fetchDisciplines();
-        }, []);
-
-        // Função assíncrona para Deletar uma disciplina
-        async function handleDeleteDiscipline(event: FormEvent) {
-            event.preventDefault()
+    // Efeito para buscar as disciplinas disponíveis da API quando o componente é montado
+    useEffect(() => {
+        // Função para buscar as disciplinas da API
+        async function fetchDisciplines() {
             try {
-                // Requisição DELETE para a API enviando o UUID da disciplina
-                await api.delete(`deletedisciplines/${id}`) 
-                .then(response => {
-                    console.log(`Deleted post with ID ${id}`);
-                  })
-                  .catch(error => {
-                    console.error(error);
-                  });
-                // Limpa o campo de UUID após a exclusão da disciplina
-                setId('');
-                alert('Disciplina deletada com sucesso!');
+                const response = await api.get('disciplines');
+                const disciplines: Discipline[] = response.data.map((discipline: any) => ({
+                    id: discipline.id,
+                    title: discipline.title
+                }));
+                setAvailableDisciplines(disciplines);
             } catch (error) {
-                console.error('Error deleting discipline:', error);
-                alert('Erro ao deletar disciplina. Verifique o console para mais detalhes.');
+                console.error('Error fetching disciplines:', error);
             }
         }
+        // Chamada da função para buscar as disciplinas
+        fetchDisciplines();
+    }, []);
 
-      return(
+    // Função assíncrona para Deletar uma disciplina
+    async function handleDeleteDiscipline(event: FormEvent) {
+        event.preventDefault()
+        try {
+            // Encontra a disciplina com o título correspondente
+            const disciplineToDelete = availableDisciplines.find(discipline => discipline.title === id);
+            if (!disciplineToDelete) {
+                throw new Error('Disciplina não encontrada');
+            }
+
+            // Requisição DELETE para a API enviando o UUID da disciplina
+            await api.delete(`deletedisciplines/${disciplineToDelete.id}`) 
+            .then(response => {
+                console.log(`Deleted post with ID ${disciplineToDelete.id}`);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+            // Limpa o campo de UUID após a exclusão da disciplina
+            setId('');
+            alert('Disciplina deletada com sucesso!');
+        } catch (error) {
+            console.error('Error deleting discipline:', error);
+            alert('Erro ao deletar disciplina. Verifique o console para mais detalhes.');
+        }
+    }
+
+    return(
         <form onSubmit={handleDeleteDiscipline} className="w-full flex flex-col mt-6">
             {/* Adicionamos um campo de entrada para o usuário inserir o UUID da disciplina */}
             <label htmlFor="id" className="font-semibold leading-tight">
@@ -60,7 +68,7 @@ export function DeleteDisciplineForm() {
             </label>
             <input
                 type="text"
-                id="id"
+                id="title"
                 value={id}
                 onChange={(event) => setId(event.target.value)}
                 placeholder="Digite o UUID da disciplina..."
@@ -70,8 +78,7 @@ export function DeleteDisciplineForm() {
             {/* Lista de disciplinas disponíveis */}
             <div className="className='mt-6 flex flex-col gap-3'">
                 {availableDisciplines.map((discipline, index) => (
-                    
-                    <span className='font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400' key={index}>{discipline}</span>
+                    <span className='font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400' key={index}>{discipline.title}</span>
                 ))}
             </div>
             
@@ -80,6 +87,5 @@ export function DeleteDisciplineForm() {
                 <span className="ml-2">Deletar</span>
             </button>
         </form>
-      )
-    
+    )
 }
