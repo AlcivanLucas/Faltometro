@@ -3,7 +3,7 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import { FormEvent, useState } from "react";
 import { api } from "../lib/axios";
 
-
+// Array contendo os dias da semana disponíveis para aparecer no formulário
 const availableWeekDays = [
     'Domingo',
     'Segunda-feira',
@@ -15,32 +15,39 @@ const availableWeekDays = [
 ]
 
 export function NewDisciplineForm() {
+    // Estados para controlar o título da disciplina e os dias da semana selecionados
     const [title, setTitle] = useState('')
     const [weekDays, setWeekDays] = useState<number[]>([])
 
+    // Função assíncrona para criar uma nova disciplina
     async function createNewDiscipline(event: FormEvent) {
         event.preventDefault()
 
+        // Verifica se o título ou os dias da semana não foram preenchidos e retorna caso algum deles esteja vazio
         if (!title || weekDays.length === 0) {
-            return
+            return alert('Preencha todos os campos')
         }
 
+        // Requisição POST para a API enviando o título e os dias da semana selecionados
         await api.post('disciplines', {
             title,
             weekDays
         })
 
+        // Limpa os campos de título e dias da semana após o envio da disciplina
         setTitle('')
         setWeekDays([])
 
         alert('Disciplina adicinada com sucesso!')
     }
 
-
+    // Função para lidar com a seleção ou desseleção de um dia da semana
     function handleToggleWeekDay(weekDay: number) {
+        // Se o dia da semana já estiver selecionado, remove-o da lista
         if (weekDays.includes(weekDay)) {
             const weekDaysWithRemovedOne = weekDays.filter(day => day !== weekDay)
             setWeekDays(weekDaysWithRemovedOne)
+        // Se o dia da semana não estiver selecionado, adiciona-o à lista
         } else {
             const weekDaysWithAddedOne = [...weekDays, weekDay]
             setWeekDays(weekDaysWithAddedOne)
@@ -49,11 +56,12 @@ export function NewDisciplineForm() {
 
 
     return (
+        // Retorna o formulário JSX para adicionar uma nova disciplina
         <form onSubmit={createNewDiscipline} className="w-full flex flex-col mt-6">
             <label htmlFor="title" className="font-semibold leading-tight">
                 Qual o seu compromisso?
             </label>
-
+            {/* Campo de entrada para o título da disciplina */}
             <input
                 type="text"
                 id="title"
@@ -63,11 +71,10 @@ export function NewDisciplineForm() {
                 value={title}
                 onChange={event => setTitle(event.target.value)}
             />
-
             <label htmlFor="" className="font-semibold leading-tight mt-4">
                 Qual a recorrência?
             </label>
-
+            {/* Lista de checkboxes para selecionar os dias da semana */}
             <div className="mt-3 flex flex-col gap-2">
                 {availableWeekDays.map((weekDay, index) => {
                     return (
@@ -91,7 +98,7 @@ export function NewDisciplineForm() {
                 })}
 
             </div>
-
+            {/* Botão para confirmar a adição da disciplina */}
             <button
                 type="submit"
                 className="mt-6 rounded-lg p-4 flex items-center justify-center gap-3 font-semibold bg-green-600 hover:bg-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-zinc-900">
