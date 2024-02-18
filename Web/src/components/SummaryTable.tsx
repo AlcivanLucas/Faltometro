@@ -38,22 +38,6 @@ type Summary = {
 
 // Componente principal para exibir o calendário
 export function SummaryTable(){
-//     defaultCompleted = 0,
-//     defaultAmount = 0,
-//     date,
-// }: DisciplineDayProps) {
-//     const defaultCompletedPercentage = calculateCompletedPercentage(
-//         defaultAmount,
-//         defaultCompleted
-//     );
-
-//     const [completedPercentage, setCompletedPercentage] = useState(
-//         defaultCompletedPercentage
-//     );
-
-//     function handleCompletedPercentage(percentage: number) {
-//         setCompletedPercentage(percentage);
-//     }
 
     // Estado para armazenar os dados do resumo
     const [summary, setSummary] = useState<Summary>([]);
